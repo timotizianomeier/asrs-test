@@ -8,6 +8,13 @@
 /** One answer, coded 0–4: Never, Rarely, Sometimes, Often, Very often. */
 export type Answer = 0 | 1 | 2 | 3 | 4;
 
+/** Named answer codes, so code reads like the questionnaire. */
+export const NEVER: Answer = 0;
+export const RARELY: Answer = 1;
+export const SOMETIMES: Answer = 2;
+export const OFTEN: Answer = 3;
+export const VERY_OFTEN: Answer = 4;
+
 /** Part A = the six screener questions (1–6); Part B = questions 7–18. */
 export type Part = "A" | "B";
 
@@ -20,6 +27,10 @@ export interface Item {
   readonly id: number;
   readonly part: Part;
   readonly domain: Domain;
-  /** Lowest answer that counts as a symptom (2 = Sometimes, 3 = Often). */
+  /**
+   * Lowest answer that counts as a symptom: the first shaded box on the
+   * official checklist (SOMETIMES or OFTEN). An answer counts if
+   * answer >= countsAt.
+   */
   readonly countsAt: Answer;
 }
