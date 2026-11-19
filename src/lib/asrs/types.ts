@@ -41,6 +41,17 @@ export interface DomainCounts {
   readonly hyperactivityImpulsivity: number;
 }
 
+/**
+ * Everything the site shows about one completed questionnaire.
+ * Deliberately no 0–72 total, percentile or type label (brief 5.4).
+ */
+export interface Result {
+  /** Screener score, 0–6 (brief 5.1). */
+  readonly screener: number;
+  readonly band: Band;
+  readonly domains: DomainCounts;
+}
+
 /** Sources a result figure can cite. Each one gets a full reference on the site. */
 export type SourceId = "kessler2005-table4";
 
