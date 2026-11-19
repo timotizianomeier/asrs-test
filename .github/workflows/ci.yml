@@ -1,0 +1,39 @@
+# Runs on every push and pull request: install, type check, tests, build.
+# The geotastic equivalent is .gitlab-ci.yml with its test and format stages.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies (exactly as in package-lock.json)
+        run: npm ci
+
+      - name: Scoring module imports nothing outside its own folder
+        run: |
+          if grep -rnE "^(import|export) .*from ['\"](\.\./|[^.])" src/lib/asrs; then
+            echo "src/lib/asrs must only import from ./ (brief: no dependencies)"
+            exit 1
+          fi
+
+      - name: Type check
+        run: npm run check
+
+      - name: Tests
+        run: npm test
+
+      - name: Build
+        run: npm run build
