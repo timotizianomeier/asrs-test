@@ -34,3 +34,23 @@ export interface Item {
    */
   readonly countsAt: Answer;
 }
+
+/** Sources a result figure can cite. Each one gets a full reference on the site. */
+export type SourceId = "kessler2005-table4";
+
+/** The three screener bands. The sentences for each live in src/i18n/. */
+export type BandId = "low" | "uncertain" | "positive";
+
+/** One screener band: a score range and the study figures for it. */
+export interface Band {
+  readonly id: BandId;
+  /** Lowest and highest screener score in this band (inclusive). */
+  readonly min: number;
+  readonly max: number;
+  /** % of people WITH a clinical ADHD diagnosis who scored in this band. */
+  readonly withDiagnosis: number;
+  /** % of people WITHOUT a diagnosis who scored in this band. */
+  readonly withoutDiagnosis: number;
+  /** Where the two percentages come from. */
+  readonly source: SourceId;
+}
