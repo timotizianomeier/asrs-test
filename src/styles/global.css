@@ -132,6 +132,26 @@ button:disabled {
   accent-color: var(--accent);
 }
 
+/* Without this, `display: flex` on labels etc. would override [hidden]. */
+[hidden] {
+  display: none !important;
+}
+
+#progress-bar {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.step-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.question legend:focus {
+  outline: none; /* focus is moved here by script, not by the user */
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     transition: none !important;

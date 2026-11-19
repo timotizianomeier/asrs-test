@@ -34,6 +34,9 @@ export interface Messages {
     readonly partB: string;
     readonly submit: string;
     readonly noScript: string;
+    readonly progress: (current: number, total: number) => string;
+    readonly back: string;
+    readonly next: string;
   };
 
   /** Official instruction text shown above the questions. */

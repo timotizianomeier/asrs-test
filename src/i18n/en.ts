@@ -60,6 +60,9 @@ export const en: Messages = {
     noScript:
       "Your result is calculated in your browser, so this page needs JavaScript to show it. " +
       "Your answers are never sent anywhere.",
+    progress: (current, total) => `Question ${current} of ${total}`,
+    back: "Back",
+    next: "Next",
   },
 
   instructions:

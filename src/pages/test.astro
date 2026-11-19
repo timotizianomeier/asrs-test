@@ -18,15 +18,20 @@ const parts: { label: string; items: Item[] }[] = [
   <!--
     No `action`, and the submit button starts disabled: a plain HTML submit
     would put the answers into the URL (/test?q1=2&…). The page script
-    (pieces 6–7) enables the button and handles the submit in the browser.
+    enables the button and handles the submit in the browser.
   -->
   <form id="asrs-form">
+    <div id="progress" hidden>
+      <p id="progress-text"></p>
+      <progress id="progress-bar" max={ITEMS.length} value="1" aria-hidden="true"></progress>
+    </div>
+
     {parts.map((part) => (
       <section>
         <h2>{part.label}</h2>
         {part.items.map((item) => (
           <fieldset class="question" id={`q${item.id}`}>
-            <legend>{item.id}. {t.items[item.id]}</legend>
+            <legend tabindex="-1">{item.id}. {t.items[item.id]}</legend>
             {ANSWERS.map((answer) => (
               <label>
                 <input type="radio" name={`q${item.id}`} value={answer} required />
@@ -38,7 +43,71 @@ const parts: { label: string; items: Item[] }[] = [
       </section>
     ))}
 
-    <button type="submit" disabled>{t.test.submit}</button>
+    <div class="step-nav">
+      <button type="button" id="back" hidden>{t.test.back}</button>
+      <button type="button" id="next" hidden>{t.test.next}</button>
+      <button type="submit" id="submit" disabled>{t.test.submit}</button>
+    </div>
     <noscript><p>{t.test.noScript}</p></noscript>
   </form>
 </BaseLayout>
+
+<script>
+  // Runs in the browser. Upgrades the full form into one question per screen.
+  // If this script fails, the plain form above still works for answering.
+  import { getMessages, type Locale } from "../i18n";
+
+  const t = getMessages(document.documentElement.lang as Locale);
+  const form = document.querySelector<HTMLFormElement>("#asrs-form")!;
+  const questions = Array.from(form.querySelectorAll<HTMLFieldSetElement>(".question"));
+  const sections = Array.from(form.querySelectorAll<HTMLElement>("section"));
+  const back = form.querySelector<HTMLButtonElement>("#back")!;
+  const next = form.querySelector<HTMLButtonElement>("#next")!;
+  const submit = form.querySelector<HTMLButtonElement>("#submit")!;
+  const progress = form.querySelector<HTMLElement>("#progress")!;
+  const progressText = form.querySelector<HTMLElement>("#progress-text")!;
+  const progressBar = form.querySelector<HTMLProgressElement>("#progress-bar")!;
+
+  let current = 0;
+  const isAnswered = (q: HTMLFieldSetElement) => q.querySelector("input:checked") !== null;
+  const isLast = () => current === questions.length - 1;
+
+  function updateButtons() {
+    back.disabled = current === 0;
+    next.disabled = !isAnswered(questions[current]);
+    next.hidden = isLast();
+    submit.hidden = !isLast();
+    submit.disabled = !questions.every(isAnswered);
+  }
+
+  function show(index: number, moveFocus: boolean) {
+    current = index;
+    questions.forEach((q, i) => (q.hidden = i !== index));
+    // Show only the Part A / Part B heading of the current question.
+    sections.forEach((s) => (s.hidden = !s.contains(questions[index])));
+    progressText.textContent = t.test.progress(index + 1, questions.length);
+    progressBar.value = index + 1;
+    updateButtons();
+    // Move focus to the new question so screen readers announce it.
+    if (moveFocus) questions[index].querySelector("legend")!.focus();
+  }
+
+  back.addEventListener("click", () => show(current - 1, true));
+  next.addEventListener("click", () => show(current + 1, true));
+  form.addEventListener("change", updateButtons);
+
+  // Enter on an answered question goes to the next one.
+  form.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" || isLast()) return;
+    event.preventDefault();
+    if (isAnswered(questions[current])) show(current + 1, true);
+  });
+
+  // Never let the browser submit the form (that would put answers in the URL).
+  // Showing the result in place comes in piece 7.
+  form.addEventListener("submit", (event) => event.preventDefault());
+
+  progress.hidden = false;
+  back.hidden = false;
+  show(0, false);
+</script>
