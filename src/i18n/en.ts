@@ -28,6 +28,29 @@ export const en: Messages = {
     codeLink: "Source code on GitHub (MIT licence)",
   },
 
+  home: {
+    pageTitle: "Home",
+    metaDescription:
+      "Free self-check with the WHO Adult ADHD Self-Report Scale (ASRS v1.1). " +
+      "Results show only what the research supports. Not a diagnosis.",
+    heading: "Adult ADHD self-check",
+    intro:
+      "This is the Adult ADHD Self-Report Scale (ASRS v1.1), developed with the World Health " +
+      "Organization: 18 questions about how often certain things have happened to you over the " +
+      "past 6 months.",
+    // "About 5 minutes": the official ASRS-v1.1 checklist states it
+    // "takes about 5 minutes to complete".
+    duration: "It takes about 5 minutes.",
+    whyFreeHeading: "Free, with no business incentive",
+    // Must stay true to what the code does; update when opt-in stats (milestone 4) exist.
+    whyFree:
+      "Many ADHD test sites exist to sell you an app or an assessment. This one doesn't: no ads, " +
+      "no accounts, no cookies. Your answers are scored in your browser and are not sent " +
+      "anywhere. The result shows only what the published research supports, with sources, " +
+      "and the code is open for anyone to check.",
+    start: "Start the questionnaire",
+  },
+
   instructions:
     "Please answer the questions below, rating yourself on each of the criteria shown. " +
     "As you answer each question, select the response that best describes how you have " +

@@ -1,8 +1,17 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getMessages } from "../i18n";
+
+const t = getMessages("en");
 ---
 
-<BaseLayout title="Home" locale="en">
-  <h1>Placeholder</h1>
-  <p>The home page content comes in piece 4.</p>
+<BaseLayout title={t.home.pageTitle} locale="en" description={t.home.metaDescription}>
+  <h1>{t.home.heading}</h1>
+  <p>{t.home.intro}</p>
+  <p><strong>{t.notADiagnosis}</strong></p>
+  <p>{t.home.duration}</p>
+  <p><a class="button" href="/test">{t.home.start}</a></p>
+
+  <h2>{t.home.whyFreeHeading}</h2>
+  <p>{t.home.whyFree}</p>
 </BaseLayout>

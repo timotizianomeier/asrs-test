@@ -14,6 +14,18 @@ export interface Messages {
     readonly codeLink: string;
   };
 
+  /** Home page (brief 8.1). */
+  readonly home: {
+    readonly pageTitle: string;
+    readonly metaDescription: string;
+    readonly heading: string;
+    readonly intro: string;
+    readonly duration: string;
+    readonly whyFreeHeading: string;
+    readonly whyFree: string;
+    readonly start: string;
+  };
+
   /** Official instruction text shown above the questions. */
   readonly instructions: string;
   /** Official item wording, keyed by official item number. */
