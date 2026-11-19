@@ -51,6 +51,17 @@ export const en: Messages = {
     start: "Start the questionnaire",
   },
 
+  test: {
+    pageTitle: "Questionnaire",
+    heading: "Adult ADHD Self-Report Scale (ASRS v1.1)",
+    partA: "Part A",
+    partB: "Part B",
+    submit: "Show my result",
+    noScript:
+      "Your result is calculated in your browser, so this page needs JavaScript to show it. " +
+      "Your answers are never sent anywhere.",
+  },
+
   instructions:
     "Please answer the questions below, rating yourself on each of the criteria shown. " +
     "As you answer each question, select the response that best describes how you have " +

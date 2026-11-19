@@ -26,6 +26,16 @@ export interface Messages {
     readonly start: string;
   };
 
+  /** Test page (brief 8.2). */
+  readonly test: {
+    readonly pageTitle: string;
+    readonly heading: string;
+    readonly partA: string;
+    readonly partB: string;
+    readonly submit: string;
+    readonly noScript: string;
+  };
+
   /** Official instruction text shown above the questions. */
   readonly instructions: string;
   /** Official item wording, keyed by official item number. */

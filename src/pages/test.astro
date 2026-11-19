@@ -1,0 +1,44 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getMessages } from "../i18n";
+import { ITEMS, type Answer, type Item } from "../lib/asrs";
+
+const t = getMessages("en");
+const ANSWERS: Answer[] = [0, 1, 2, 3, 4];
+const parts: { label: string; items: Item[] }[] = [
+  { label: t.test.partA, items: ITEMS.filter((item) => item.part === "A") },
+  { label: t.test.partB, items: ITEMS.filter((item) => item.part === "B") },
+];
+---
+
+<BaseLayout title={t.test.pageTitle} locale="en">
+  <h1>{t.test.heading}</h1>
+  <p>{t.instructions}</p>
+
+  <!--
+    No `action`, and the submit button starts disabled: a plain HTML submit
+    would put the answers into the URL (/test?q1=2&…). The page script
+    (pieces 6–7) enables the button and handles the submit in the browser.
+  -->
+  <form id="asrs-form">
+    {parts.map((part) => (
+      <section>
+        <h2>{part.label}</h2>
+        {part.items.map((item) => (
+          <fieldset class="question" id={`q${item.id}`}>
+            <legend>{item.id}. {t.items[item.id]}</legend>
+            {ANSWERS.map((answer) => (
+              <label>
+                <input type="radio" name={`q${item.id}`} value={answer} required />
+                {t.answerLabels[answer]}
+              </label>
+            ))}
+          </fieldset>
+        ))}
+      </section>
+    ))}
+
+    <button type="submit" disabled>{t.test.submit}</button>
+    <noscript><p>{t.test.noScript}</p></noscript>
+  </form>
+</BaseLayout>
