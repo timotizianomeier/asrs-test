@@ -35,6 +35,12 @@ export interface Item {
   readonly countsAt: Answer;
 }
 
+/** Symptoms counted per DSM-IV area (brief 5.2). Each is 0–9. */
+export interface DomainCounts {
+  readonly inattention: number;
+  readonly hyperactivityImpulsivity: number;
+}
+
 /** Sources a result figure can cite. Each one gets a full reference on the site. */
 export type SourceId = "kessler2005-table4";
 
