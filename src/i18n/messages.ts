@@ -5,6 +5,15 @@
 import type { Answer, Band, BandId, Domain, ItemId, SourceId } from "../lib/asrs";
 
 export interface Messages {
+  /** Site frame (BaseLayout): name, skip link and footer lines. */
+  readonly siteName: string;
+  readonly skipToContent: string;
+  readonly footer: {
+    readonly help: string;
+    readonly asrsCopyright: string;
+    readonly codeLink: string;
+  };
+
   /** Official instruction text shown above the questions. */
   readonly instructions: string;
   /** Official item wording, keyed by official item number. */

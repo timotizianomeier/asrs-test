@@ -16,6 +16,18 @@ import type { Messages } from "./messages";
 const pct = (value: number) => `${value.toFixed(1)}%`;
 
 export const en: Messages = {
+  siteName: "ASRS self-check",
+  skipToContent: "Skip to content",
+  footer: {
+    help:
+      "If attention, restlessness or impulsivity cause you real problems, talk to your doctor " +
+      "or a psychologist.",
+    asrsCopyright:
+      "The Adult ADHD Self-Report Scale (ASRS-v1.1) is © World Health Organization. " +
+      "Permission to reproduce it on this site has not yet been granted.",
+    codeLink: "Source code on GitHub (MIT licence)",
+  },
+
   instructions:
     "Please answer the questions below, rating yourself on each of the criteria shown. " +
     "As you answer each question, select the response that best describes how you have " +
