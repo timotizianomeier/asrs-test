@@ -21,10 +21,12 @@ export type Part = "A" | "B";
 /** The DSM-IV symptom area a question belongs to. */
 export type Domain = "inattention" | "hyperactivity-impulsivity";
 
+/** Official question number, 1–18. */
+export type ItemId = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18;
+
 /** One row of the item table (official checklist numbering). */
 export interface Item {
-  /** Official question number, 1–18. */
-  readonly id: number;
+  readonly id: ItemId;
   readonly part: Part;
   readonly domain: Domain;
   /**
