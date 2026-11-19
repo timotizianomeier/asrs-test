@@ -54,8 +54,11 @@ export interface Result {
   readonly domains: DomainCounts;
 }
 
-/** Sources a result figure can cite. Each one gets a full reference on the site. */
-export type SourceId = "kessler2005-table4";
+/**
+ * Sources a result figure can cite. Each one gets a full reference on the site.
+ * "kessler2005" = the paper as a whole; "kessler2005-table4" = its Table 4.
+ */
+export type SourceId = "kessler2005" | "kessler2005-table4";
 
 /** The three screener bands. The sentences for each live in src/i18n/. */
 export type BandId = "low" | "uncertain" | "positive";

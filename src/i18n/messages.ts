@@ -39,6 +39,12 @@ export interface Messages {
     readonly next: string;
   };
 
+  /** Result view (brief 8.3). */
+  readonly result: {
+    readonly heading: string;
+    readonly sourceLabel: string;
+  };
+
   /** Official instruction text shown above the questions. */
   readonly instructions: string;
   /** Official item wording, keyed by official item number. */
@@ -65,5 +71,5 @@ export interface Messages {
   readonly evidenceLimitations: readonly string[];
 
   /** Full reference for each source a figure can cite. */
-  readonly sources: Readonly<Record<SourceId, string>>;
+  readonly sources: Readonly<Record<SourceId, { readonly citation: string; readonly url: string }>>;
 }

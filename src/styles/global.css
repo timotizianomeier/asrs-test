@@ -152,6 +152,30 @@ button:disabled {
   outline: none; /* focus is moved here by script, not by the user */
 }
 
+#result:focus {
+  outline: none; /* focus is moved here by script after submit */
+}
+
+.source {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.not-a-diagnosis {
+  padding: 0.75rem 1rem;
+  border-left: 4px solid var(--accent);
+  background: var(--surface);
+  font-weight: 600;
+}
+
+details {
+  margin-top: 2rem;
+}
+summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     transition: none !important;

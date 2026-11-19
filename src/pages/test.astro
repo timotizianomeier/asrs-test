@@ -13,7 +13,7 @@ const parts: { label: string; items: Item[] }[] = [
 
 <BaseLayout title={t.test.pageTitle} locale="en">
   <h1>{t.test.heading}</h1>
-  <p>{t.instructions}</p>
+  <p id="instructions">{t.instructions}</p>
 
   <!--
     No `action`, and the submit button starts disabled: a plain HTML submit
@@ -50,12 +50,17 @@ const parts: { label: string; items: Item[] }[] = [
     </div>
     <noscript><p>{t.test.noScript}</p></noscript>
   </form>
+
+  <!-- Filled in by the script after submit; answers never leave the page. -->
+  <section id="result" hidden tabindex="-1"></section>
 </BaseLayout>
 
 <script>
   // Runs in the browser. Upgrades the full form into one question per screen.
   // If this script fails, the plain form above still works for answering.
   import { getMessages, type Locale } from "../i18n";
+  import { scoreAnswers } from "../lib/asrs";
+  import { renderResult } from "../scripts/renderResult";
 
   const t = getMessages(document.documentElement.lang as Locale);
   const form = document.querySelector<HTMLFormElement>("#asrs-form")!;
@@ -104,8 +109,20 @@ const parts: { label: string; items: Item[] }[] = [
   });
 
   // Never let the browser submit the form (that would put answers in the URL).
-  // Showing the result in place comes in piece 7.
-  form.addEventListener("submit", (event) => event.preventDefault());
+  // Instead: read the answers, score them here, and show the result in place.
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    // Unanswered → NaN, which scoreAnswers rejects; the button is disabled then anyway.
+    const answers = questions.map((q) => Number(q.querySelector<HTMLInputElement>("input:checked")?.value));
+    const result = scoreAnswers(answers);
+
+    const resultSection = document.querySelector<HTMLElement>("#result")!;
+    renderResult(resultSection, result, t);
+    form.hidden = true;
+    document.querySelector<HTMLElement>("#instructions")!.hidden = true;
+    resultSection.hidden = false;
+    resultSection.focus();
+  });
 
   progress.hidden = false;
   back.hidden = false;

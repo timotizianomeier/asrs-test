@@ -15,6 +15,12 @@ import type { Messages } from "./messages";
 /** 27 → "27.0%", so figures always show as printed in Table 4. */
 const pct = (value: number) => `${value.toFixed(1)}%`;
 
+const KESSLER_2005 =
+  "Kessler RC, Adler L, Ames M, et al. (2005). The World Health Organization Adult ADHD " +
+  "Self-Report Scale (ASRS): a short screening scale for use in the general population. " +
+  "Psychological Medicine, 35(2), 245–256";
+const KESSLER_2005_DOI = "https://doi.org/10.1017/S0033291704002892";
+
 export const en: Messages = {
   siteName: "ASRS self-check",
   skipToContent: "Skip to content",
@@ -63,6 +69,11 @@ export const en: Messages = {
     progress: (current, total) => `Question ${current} of ${total}`,
     back: "Back",
     next: "Next",
+  },
+
+  result: {
+    heading: "Your result",
+    sourceLabel: "Source:",
   },
 
   instructions:
@@ -155,9 +166,7 @@ export const en: Messages = {
   ],
 
   sources: {
-    "kessler2005-table4":
-      "Kessler RC, Adler L, Ames M, et al. (2005). The World Health Organization Adult ADHD " +
-      "Self-Report Scale (ASRS): a short screening scale for use in the general population. " +
-      "Psychological Medicine, 35(2), 245–256, Table 4. https://doi.org/10.1017/S0033291704002892",
+    kessler2005: { citation: KESSLER_2005, url: KESSLER_2005_DOI },
+    "kessler2005-table4": { citation: `${KESSLER_2005}, Table 4`, url: KESSLER_2005_DOI },
   },
 };
