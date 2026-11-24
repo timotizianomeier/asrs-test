@@ -8,6 +8,8 @@ export interface Messages {
   /** Site frame (BaseLayout): name, skip link and footer lines. */
   readonly siteName: string;
   readonly skipToContent: string;
+  /** Shown on every page until go-live (docs/decisions.md #18). */
+  readonly testBanner: string;
   readonly footer: {
     readonly help: string;
     readonly asrsCopyright: string;

@@ -108,7 +108,7 @@ rejected) · **Consequences** (what follows, and how it's enforced).
 - **Consequences:** Milestones 1–3 need no server at all.
 
 ## 15. Hosting: Cloudflare Pages now, Scaleway (EU) for the server function
-- Date: 2026-11-24 · Status: accepted
+- Date: 2026-11-24 · Status: accepted; the "behind Cloudflare Access" part is superseded by #18
 - **Decision:** The static site goes on Cloudflare Pages behind Cloudflare Access (only Timo can open it) until go-live. The stats function (milestone 4) is planned on Scaleway, an EU company with EU data centres.
 - **Why:** Cloudflare is free and the only free option found with a genuinely private test site. The static pages receive no answers, so US hosting is acceptable there if the privacy page names the host. The function receives health-related answers, so it should be with an EU company, outside the reach of US law such as the CLOUD Act; Scaleway's free function allowance covers this site.
 - **Alternatives:** GitHub Pages (always public on the free plan, no server functions); Netlify (password protection is paid); Infomaniak 🇨🇭 (about CHF 11/month); Bunny.net 🇪🇺 (about $1/month); a Hetzner server 🇪🇺 (about €6/month, self-maintained). Prices as checked on 2026-11-24.
@@ -127,3 +127,10 @@ rejected) · **Consequences** (what follows, and how it's enforced).
 - **Why:** Turns the promise "no third-party trackers or CDNs" into something the browser enforces, even if a third-party script were added by mistake. `no-referrer` stops linked sites from learning a visitor came from an ADHD test.
 - **Alternatives:** No CSP (the promise rests on code review alone); `style-src 'unsafe-inline'` to allow Astro's inlined CSS (weaker).
 - **Consequences:** The milestone 4 stats endpoint must be added to `connect-src`. `noindex` must be removed at go-live. `e2e/headers.e2e.ts` applies the headers locally and fails if the policy blocks anything the site needs.
+
+## 18. Test site is public, without access control
+- Date: 2026-11-24 · Status: accepted (risk accepted by Timo) · Supersedes the Access part of #15
+- **Decision:** `asrs-test.pages.dev` is publicly reachable before the ASRS permission and the privacy review. Every page shows a "Test version: not yet meant for use, not a diagnosis" banner. `noindex` stays on.
+- **Why:** Cloudflare Zero Trust Access requires a payment card even on its free plan. The code and the WHO wording are already public in the repo (#16), and the site sends no answers anywhere, so the added risk is judged low.
+- **Alternatives:** Cloudflare Access with a card on file; an HTTP Basic Auth password gate as a Pages Function (no card, but staging-only code to remove later); leaving it public without a banner.
+- **Consequences:** This deviates from the brief ("build and test only on a private/staging URL"). Strangers who find the URL (it matches the repo name) can use the tool, and Cloudflare logs visitors' IP addresses while no privacy page exists yet. Revisit before milestone 4 (stats), when answers can leave the browser. Remove the banner and `noindex` at go-live.

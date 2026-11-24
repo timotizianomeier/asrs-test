@@ -24,6 +24,9 @@ const KESSLER_2005_DOI = "https://doi.org/10.1017/S0033291704002892";
 export const en: Messages = {
   siteName: "ASRS self-check",
   skipToContent: "Skip to content",
+  testBanner:
+    "Test version: this site is still being built and is not yet meant for use. " +
+    "It is not a diagnosis.",
   footer: {
     help:
       "If attention, restlessness or impulsivity cause you real problems, talk to your doctor " +

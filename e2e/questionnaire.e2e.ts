@@ -40,6 +40,13 @@ test("golden case: answers stay on the page, result shows the cited figures", as
   expect(requests).toEqual([]);
 });
 
+test("every page shows the test-version banner (until go-live)", async ({ page }) => {
+  for (const path of ["/", "/test"]) {
+    await page.goto(path);
+    await expect(page.getByText("Test version:")).toBeVisible();
+  }
+});
+
 test("one question at a time: Next unlocks after answering, Back returns", async ({ page }) => {
   await page.goto("/test");
   await expect(page.getByText("Question 1 of 18")).toBeVisible();
