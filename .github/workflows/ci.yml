@@ -37,3 +37,9 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Install headless Chromium for browser tests
+        run: npx playwright install --with-deps chromium
+
+      - name: Browser tests and accessibility scan (WCAG 2.2 AA)
+        run: npm run test:e2e
