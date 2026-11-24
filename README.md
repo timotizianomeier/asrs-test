@@ -59,8 +59,10 @@ npm run check    # type check
 npm run build    # build the static site into dist/
 ```
 
-CI runs the type check, tests and build on every push
-([`.github/workflows/ci.yml`](.github/workflows/ci.yml)).
+CI runs the type check, tests, build, browser tests and an accessibility scan
+on every push ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)).
+
+Why things are built the way they are: [`docs/decisions.md`](docs/decisions.md).
 
 ## References
 
