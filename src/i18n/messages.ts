@@ -47,6 +47,12 @@ export interface Messages {
     readonly sourceLabel: string;
   };
 
+  /** Plain-text output for email and PDF (milestone 3). */
+  readonly output: {
+    readonly title: (date: Date) => string;
+    readonly answersHeading: string;
+  };
+
   /** Official instruction text shown above the questions. */
   readonly instructions: string;
   /** Official item wording, keyed by official item number. */

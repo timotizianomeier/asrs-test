@@ -134,3 +134,17 @@ rejected) · **Consequences** (what follows, and how it's enforced).
 - **Why:** Cloudflare Zero Trust Access requires a payment card even on its free plan. The code and the WHO wording are already public in the repo (#16), and the site sends no answers anywhere, so the added risk is judged low.
 - **Alternatives:** Cloudflare Access with a card on file; an HTTP Basic Auth password gate as a Pages Function (no card, but staging-only code to remove later); leaving it public without a banner.
 - **Consequences:** This deviates from the brief ("build and test only on a private/staging URL"). Strangers who find the URL (it matches the repo name) can use the tool, and Cloudflare logs visitors' IP addresses while no privacy page exists yet. Revisit before milestone 4 (stats), when answers can leave the browser. Remove the banner and `noindex` at go-live.
+
+## 19. Email and PDF include the 18 answers as an appendix
+- Date: 2026-11-24 · Status: accepted
+- **Decision:** The email and PDF output starts with exactly what the result page shows (screener score and band with figures, domain counts with caveats, evidence limitations, sources, not-a-diagnosis). Then comes an appendix "Your answers" listing all 18 questions in official order with the chosen answer.
+- **Why:** The official checklist is meant to be given to a healthcare professional. The individual answers show which symptoms were rated how, which the score alone doesn't. The output only ever exists on the user's own device or in their own email.
+- **Alternatives:** Summary only (the list in brief §6; less useful to a clinician); an opt-in checkbox for the answers (more UI and testing).
+- **Consequences:** A forwarded email or shared PDF reveals every answer. One function, `formatResultText` in `src/output/`, produces this text for every output, so they can't diverge. It scores the answers itself, so the summary and the appendix always match. It lives outside `src/lib/asrs/` because it needs the site text (#2).
+
+## 20. No print button
+- Date: 2026-11-24 · Status: accepted · Deviates from brief §6
+- **Decision:** The result offers "Open in my email app" and "Download PDF", but no "Print".
+- **Why:** The PDF can be printed and is cleaner than a printed web page. A print button would need its own print stylesheet and extra handling, such as opening collapsed sections for paper.
+- **Alternatives:** Print via the browser dialog (`window.print()`) with a print stylesheet, as in the brief.
+- **Consequences:** Browsers can still print the page from their own menu, unstyled for paper.

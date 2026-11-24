@@ -23,9 +23,21 @@ describe("English messages", () => {
   });
 
   test("no forbidden output: no percentiles, severity labels or type labels (brief 2.2)", () => {
-    const allText = JSON.stringify(en, (_key, value) =>
-      typeof value === "function" ? value(BANDS[0]) : value,
-    ).toLowerCase();
+    // Sample arguments for every message function, by its key. A new function
+    // without an entry here fails the test, so its text can't escape the check.
+    const SAMPLE_ARGS: Record<string, unknown[]> = {
+      body: [BANDS[2]],
+      screenerHeading: [4],
+      domainCount: [9],
+      progress: [1, 18],
+      title: [new Date(2026, 10, 24)],
+    };
+    const allText = JSON.stringify(en, (key, value) => {
+      if (typeof value !== "function") return value;
+      const args = SAMPLE_ARGS[key];
+      if (!args) throw new Error(`Add sample arguments for message function "${key}"`);
+      return value(...args);
+    }).toLowerCase();
     for (const word of ["percentile", "very high", "severe", "presentation", "combined type"]) {
       expect(allText, word).not.toContain(word);
     }

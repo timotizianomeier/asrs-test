@@ -79,6 +79,12 @@ export const en: Messages = {
     sourceLabel: "Source:",
   },
 
+  output: {
+    title: (date) =>
+      `ASRS self-check: your result (${date.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })})`,
+    answersHeading: "Your answers (ASRS v1.1, past 6 months)",
+  },
+
   instructions:
     "Please answer the questions below, rating yourself on each of the criteria shown. " +
     "As you answer each question, select the response that best describes how you have " +
