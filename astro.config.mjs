@@ -10,4 +10,9 @@ export default defineConfig({
     locales: ['en'],
     defaultLocale: 'en',
   },
+  // Always serve CSS as a separate file, never inlined in <style>, so the
+  // Content-Security-Policy in public/_headers can use a strict style-src 'self'.
+  build: {
+    inlineStylesheets: 'never',
+  },
 });

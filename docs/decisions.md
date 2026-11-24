@@ -120,3 +120,10 @@ rejected) · **Consequences** (what follows, and how it's enforced).
 - **Why:** Timo's choice. Open code is a goal of the project, and the checklist is widely distributed for free.
 - **Alternatives:** Keeping the repo private until permission arrives; keeping the wording out of git.
 - **Consequences:** `LICENSE` and the site footer state that the wording is © WHO, is not covered by MIT, and that permission has not yet been granted. Update both when it is. The website itself stays private until permission (#15).
+
+## 17. A strict Content-Security-Policy enforces "no third parties"
+- Date: 2026-11-24 · Status: accepted
+- **Decision:** `public/_headers` sends a CSP that allows scripts, styles, images, fonts and connections only from the site itself (`'self'`), with no `'unsafe-inline'`. CSS is always a separate file (`build.inlineStylesheets: 'never'`) so styles don't need an exception. Also `noindex` (until go-live), `Referrer-Policy: no-referrer` and standard hardening headers.
+- **Why:** Turns the promise "no third-party trackers or CDNs" into something the browser enforces, even if a third-party script were added by mistake. `no-referrer` stops linked sites from learning a visitor came from an ADHD test.
+- **Alternatives:** No CSP (the promise rests on code review alone); `style-src 'unsafe-inline'` to allow Astro's inlined CSS (weaker).
+- **Consequences:** The milestone 4 stats endpoint must be added to `connect-src`. `noindex` must be removed at go-live. `e2e/headers.e2e.ts` applies the headers locally and fails if the policy blocks anything the site needs.

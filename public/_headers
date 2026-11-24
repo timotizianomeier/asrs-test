@@ -1,0 +1,20 @@
+# HTTP headers for every page, applied by Cloudflare Pages.
+# See docs/decisions.md #15 and #17.
+#
+# Content-Security-Policy: the browser may load scripts, styles, images, fonts
+#   and connections from this site only, so any third-party script (tracker,
+#   CDN) is blocked by the browser itself. When the stats endpoint exists
+#   (milestone 4), add its origin to connect-src.
+# X-Robots-Tag: test site, keep it out of search engines. REMOVE AT GO-LIVE.
+# Referrer-Policy: don't tell linked sites (e.g. doi.org) that the visitor came
+#   from an ADHD test.
+# The rest: standard hardening (no MIME sniffing, no embedding in other sites,
+#   no access to camera, microphone, location etc.).
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+  X-Robots-Tag: noindex, nofollow
+  Referrer-Policy: no-referrer
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()
